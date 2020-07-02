@@ -2,7 +2,7 @@ package com.cristi.forum.forum;
 
 import lombok.*;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @EqualsAndHashCode
@@ -10,7 +10,10 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Setter
 @ToString
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public class BaseEntity {
     @Id
-    private long id;
+    @GeneratedValue
+    protected Long id;
 }

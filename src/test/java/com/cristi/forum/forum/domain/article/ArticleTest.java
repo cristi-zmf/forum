@@ -1,9 +1,7 @@
-package com.cristi.forum.forum.article;
+package com.cristi.forum.forum.domain.article;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ArticleTest {
     @Test
@@ -12,7 +10,7 @@ class ArticleTest {
         Article article2 = new Article("ciuciu", "blabla", 4);
 
         article.setId(1L);
-        article2.setId(2L);
+        article2.setId(1L);
 
         Assertions.assertThat(article).isEqualTo(article2);
     }
