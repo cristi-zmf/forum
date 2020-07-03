@@ -14,16 +14,16 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @ApiRestController
-@RequestMapping("/article")
 @Transactional
 @Slf4j
 public class ArticleController {
+    public static final String ARTICLES_API_PREFIX = "articles";
     @Autowired
     private Articles articles;
     @Autowired
     private ModelMapper modelMapper;
 
-    @PutMapping
+    @PutMapping(ARTICLES_API_PREFIX)
     public long createArticle(@RequestBody ArticleDto articleToCreate) {
         log.info("Article information received from request: {}", articleToCreate);
         Article article = modelMapper.map(articleToCreate, Article.class);
@@ -31,7 +31,7 @@ public class ArticleController {
         return articles.save(article).getId();
     }
 
-    @GetMapping
+    @GetMapping(ARTICLES_API_PREFIX)
     public List<ArticleDto> listArticles() {
         return articles.findAll().stream()
                 .map(a -> modelMapper.map(a, ArticleDto.class))

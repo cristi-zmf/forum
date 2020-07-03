@@ -9,6 +9,10 @@ export class Article {
     this.link = link;
     this.votes = votes || 0;
   }
+  public static fromArticleDto(article: any): Article {
+    console.log("here is my dto: %o", article);
+    return new Article(article.title, article.link, article.votes);
+  }
 
   voteUp(): void {
     this.votes += 1;

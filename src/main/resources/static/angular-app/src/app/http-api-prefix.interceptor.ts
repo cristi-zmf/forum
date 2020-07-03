@@ -8,11 +8,11 @@ import {Observable} from "rxjs";
 export class HttpApiPrefixInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://myurl.com';
+    const apiPrefix = '/api';
     req = req.clone({
-      url: url + req.url
+      url: `${window.location.origin}${apiPrefix}${req.url}`
     });
-    console.log("Here is my url: %o", url);
+    console.log("Here is my url: %o", window.location.origin);
     console.log("Here is request url: %o", req.url);
     return next.handle(req);
   }
