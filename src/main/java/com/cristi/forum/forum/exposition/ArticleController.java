@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-@RestController
+@ApiRestController
 @RequestMapping("/article")
 @Transactional
 @Slf4j
@@ -25,7 +25,7 @@ public class ArticleController {
 
     @PutMapping
     public long createArticle(@RequestBody ArticleDto articleToCreate) {
-
+        log.info("Article information received from request: {}", articleToCreate);
         Article article = modelMapper.map(articleToCreate, Article.class);
         log.info("Saving article: {}", article);
         return articles.save(article).getId();
