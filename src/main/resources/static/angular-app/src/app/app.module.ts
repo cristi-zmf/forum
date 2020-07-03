@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ArticleComponent } from './article/article.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpApiPrefixInterceptor} from "./http-api-prefix.interceptor";
 
 @NgModule({
   declarations: [
@@ -10,9 +12,11 @@ import { ArticleComponent } from './article/article.component';
     ArticleComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, HttpClientModule
   ],
-  providers: [],
+  providers: [AppComponent,
+    {provide: HTTP_INTERCEPTORS, useClass: HttpApiPrefixInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Article} from './article/article.model';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import {Article} from './article/article.model';
 export class AppComponent {
   articles: Article[];
 
-  constructor() {
+  constructor(httpClient: HttpClient) {
     this.articles = [
       new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
       new Article('Angular for Beginners Guide',
@@ -17,6 +18,7 @@ export class AppComponent {
         'yarn-the-angular-cli-setup-an-ide/', 2),
       new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
+    httpClient.get("/articles");
   }
 
   addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
