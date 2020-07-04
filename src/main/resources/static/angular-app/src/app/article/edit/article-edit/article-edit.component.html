@@ -1,0 +1,18 @@
+<form class="ui form">
+  <div class="field">
+    <label>Title</label>
+    <textarea type="text" name="title" placeholder="Title" [(ngModel)]="article.title">
+    </textarea>
+  </div>
+  <div class="field">
+    <label>Link</label>
+    <input type="text" name="link" placeholder="Link" [(ngModel)]="article.link">
+  </div>
+  <div class="field">
+    <div class="ui checkbox">
+      <input type="checkbox" tabindex="0" class="hidden">
+      <label>I agree to the Terms and Conditions</label>
+    </div>
+  </div>
+  <button class="ui button" type="submit">Submit</button>
+</form>

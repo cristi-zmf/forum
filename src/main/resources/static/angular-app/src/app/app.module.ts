@@ -8,14 +8,21 @@ import {HttpApiPrefixInterceptor} from "./http-api-prefix.interceptor";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ArticleService} from "./article/article.service";
+import { ArticleEditComponent } from './article/edit/article-edit/article-edit.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import {RouterModule} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleComponent,
+    ArticleEditComponent,
   ],
+  entryComponents: [ArticleEditComponent],
   imports: [
-    BrowserModule, HttpClientModule, InfiniteScrollModule, NgxSpinnerModule
+    BrowserModule, HttpClientModule, InfiniteScrollModule, NgxSpinnerModule, MatDialogModule, BrowserAnimationsModule, FormsModule
   ],
   providers: [AppComponent,
     {provide: HTTP_INTERCEPTORS, useClass: HttpApiPrefixInterceptor, multi: true},

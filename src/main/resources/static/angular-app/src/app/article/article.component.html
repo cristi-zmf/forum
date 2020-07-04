@@ -9,7 +9,8 @@
   </div>
 </div>
 <div class="twelve wide column">
-  <a class="ui large header" href="{{ article.link }}">
+<!--  <a class="ui large header" href="{{ article.link }}">-->
+  <a class="ui large header"  (click)="openDialog()">
     {{ article.title }}
   </a>
   <div class="meta">{{ article.domain() }}</div>
