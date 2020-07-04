@@ -51,6 +51,13 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -77,11 +84,12 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>src/main/resources/static.angular-app</directory>
+				<directory>src/main/resources</directory>
 				<excludes>
-					<exclude>node_modules/**</exclude>
+					<exclude>static.angular-app/node_modules/**</exclude>
 				</excludes>
 			</resource>
+
 		</resources>
 		<plugins>
 			<plugin>

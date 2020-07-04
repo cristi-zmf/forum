@@ -10,7 +10,6 @@ export class Article {
     this.votes = votes || 0;
   }
   public static fromArticleDto(article: any): Article {
-    console.log("here is my dto: %o", article);
     return new Article(article.title, article.link, article.votes);
   }
 

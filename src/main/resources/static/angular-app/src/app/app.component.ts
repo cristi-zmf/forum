@@ -18,7 +18,6 @@ export class AppComponent {
         'yarn-the-angular-cli-setup-an-ide/', 2),
       new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
-    console.log("I am here!!!");
     httpClient.get("/articles").subscribe((data: Array<any>) =>
       data.forEach(e => this.articles.push(Article.fromArticleDto(e)))
     );
