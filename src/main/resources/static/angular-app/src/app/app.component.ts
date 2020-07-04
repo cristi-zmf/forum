@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Article} from './article/article.model';
 import {ArticleService} from "./article/article.service";
+import {NgxSpinner} from "ngx-spinner/lib/ngx-spinner.enum";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,7 @@ import {ArticleService} from "./article/article.service";
 export class AppComponent implements OnInit{
   articles: Article[];
 
-  constructor(private articleService: ArticleService) {
+  constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
     this.articles = [
       new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
       new Article('Angular for Beginners Guide',
@@ -26,8 +28,11 @@ export class AppComponent implements OnInit{
   }
 
   private retrieveNewArticles() {
-    this.articleService.getRandomArticles(3).subscribe((data: Array<any>) =>
-      data.forEach(e => this.articles.push(Article.fromArticleDto(e)))
+    this.spinner.show();
+    this.articleService.getRandomArticles(10).subscribe((data: Array<any>) => {
+        data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
+        this.spinner.hide();
+      }
     );
   }
 

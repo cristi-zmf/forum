@@ -24,5 +24,20 @@
 >
   <div class="ui grid posts">
     <app-article *ngFor="let article of sortedArticles()" [article]="article"></app-article>
+
   </div>
+
 </div>
+<!--<br>-->
+<div class="ui grid posts">
+  <ngx-spinner
+    bdOpacity = 0.9
+    bdColor = ""
+    size = "medium"
+    color = "#581f87"
+    type = "ball-atom"
+    [fullScreen] = "true"
+  >
+  </ngx-spinner>
+</div>
+
