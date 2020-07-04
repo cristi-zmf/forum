@@ -15,9 +15,13 @@ export class ArticleEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.article = this.data.article;
+    this.article = Article.fromArticleDto(this.data.article);
   }
 
+  applyChanges() {
+    this.data.article.makeMeHaveSameContentAs(this.article);
+    this.dialogRef.close();
+  }
 }
 
 export interface ArticleData {

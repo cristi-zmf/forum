@@ -16,6 +16,13 @@ export class Article {
     return articleModel;
   }
 
+  makeMeHaveSameContentAs(article: Article) {
+    this.title = article.title;
+    this.link = article.link;
+    this.votes = article.votes;
+    this.id = article.id;
+  }
+
 
   voteUp(): void {
     this.votes += 1;
