@@ -1,4 +1,5 @@
 export class Article {
+  id: number;
   title: string;
   link: string;
   votes: number;
@@ -10,8 +11,11 @@ export class Article {
     this.votes = votes || 0;
   }
   public static fromArticleDto(article: any): Article {
-    return new Article(article.title, article.link, article.votes);
+    let articleModel = new Article(article.title, article.link, article.votes);
+    articleModel.id = article.id;
+    return articleModel;
   }
+
 
   voteUp(): void {
     this.votes += 1;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -42,8 +41,18 @@ public class ArticleController {
 
     @GetMapping(ARTICLES_API_PREFIX + "/random/{size}")
     public List<ArticleDto> getRandomNArticles(@PathVariable int size) {
-        log.info("Number of articles to be retrieved {}", articles.count());
-        return articles.findRandomArticles(size).stream()
+        List<Article> randomArticles = articles.findRandomArticles(size);
+        log.info("Number of articles to be retrieved {}", randomArticles.size());
+        return randomArticles.stream()
+                .map(a -> modelMapper.map(a, ArticleDto.class))
+                .collect(toList());
+    }
+
+    @GetMapping(ARTICLES_API_PREFIX + "/{id}/{size}")
+    public List<ArticleDto> getNextNArticles(@PathVariable long id, @PathVariable int size) {
+        List<Article> nextArticles = articles.findNextArticlesWithIdGreaterThan(id, size);
+        log.info("Number of articles to be retrieved {}", nextArticles.size());
+        return nextArticles.stream()
                 .map(a -> modelMapper.map(a, ArticleDto.class))
                 .collect(toList());
     }

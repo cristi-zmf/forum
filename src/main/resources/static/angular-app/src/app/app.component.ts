@@ -14,11 +14,11 @@ export class AppComponent implements OnInit{
 
   constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
     this.articles = [
-      new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
-      new Article('Angular for Beginners Guide',
-        'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
-        'yarn-the-angular-cli-setup-an-ide/', 2),
-      new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
+      // new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
+      // new Article('Angular for Beginners Guide',
+      //   'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
+      //   'yarn-the-angular-cli-setup-an-ide/', 2),
+      // new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
 
   }
@@ -29,10 +29,10 @@ export class AppComponent implements OnInit{
 
   private retrieveArticles() {
     this.spinner.show();
-    this.retrieveBatchOfArticles();
+    this.retrieveNextBatchOfArticles();
   }
 
-  private retrieveBatchOfArticles() {
+  private retrieveRandomBatchOfArticles() {
     this.articleService.getRandomArticles(10).subscribe((data: Array<any>) => {
         data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
         this.spinner.hide();
@@ -40,9 +40,22 @@ export class AppComponent implements OnInit{
     );
   }
 
+  private retrieveNextBatchOfArticles() {
+    let lastRetrievedId = 0;
+    if (this.articles.length > 0) {
+      let lastArticle: Article = this.articles[this.articles.length - 1];
+      lastRetrievedId = lastArticle.id;
+    }
+    this.articleService.getNextArticles(lastRetrievedId, 10).subscribe((data: Array<any>) => {
+        this.pushNewArticlesToUIListOfArticles(data);
+        this.spinner.hide();
+      }
+    );
+  }
+
   private retrieveAllArticles() {
     this.articleService.getArticles().subscribe((data: Array<any>) => {
-        data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
+        this.pushNewArticlesToUIListOfArticles(data);
         this.spinner.hide();
       }
     );
@@ -54,6 +67,10 @@ export class AppComponent implements OnInit{
     title.value = '';
     link.value = '';
     return false;
+  }
+
+  private pushNewArticlesToUIListOfArticles(data: Array<any>) {
+    data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
   }
 
   sortedArticles(): Article[] {

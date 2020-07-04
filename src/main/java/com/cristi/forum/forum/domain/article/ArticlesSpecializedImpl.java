@@ -20,7 +20,13 @@ public class ArticlesSpecializedImpl implements ArticlesSpecialized {
         int randomPage = (int) (articles.count() / limit * Math.random());
         log.info("Random page selected: {}", randomPage);
         List<Article> randomArticles = articles.findAll(PageRequest.of(randomPage, limit)).getContent();
-        log.info("Found random articles {}", randomArticles);
+        log.debug("Found random articles {}", randomArticles);
         return randomArticles;
+    }
+
+    @Override
+    public List<Article> findNextArticlesWithIdGreaterThan(long id, int limit) {
+        return articles.findByIdGreaterThan(id, PageRequest.of(0, limit))
+                .getContent();
     }
 }

@@ -14,4 +14,8 @@ export class ArticleService {
   public getRandomArticles(limit: number): Observable<Array<any>>  {
     return this.http.get<Array<any>>(`/articles/random/${limit}`);
   }
+
+  public getNextArticles(id: number, limit: number): Observable<Array<any>>  {
+    return this.http.get<Array<any>>(`/articles/${id}/${limit}`);
+  }
 }
