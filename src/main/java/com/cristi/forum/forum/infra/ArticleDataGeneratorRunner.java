@@ -33,7 +33,7 @@ public class ArticleDataGeneratorRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         List<Article> generatedArticles = IntStream.iterate(1, s -> s = s + 1)
-                .mapToObj(n -> new Article(faker.funnyName().name(), "http://" + faker.internet().url(), 0))
+                .mapToObj(n -> new Article(faker.chuckNorris().fact(), "http://" + faker.internet().url(), 0))
                 .limit(maxNoOrArticlesToGenerate)
                 .collect(toList());
         log.info("Saving {} fake articles", maxNoOrArticlesToGenerate);
