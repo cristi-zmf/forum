@@ -37,5 +37,14 @@ public class ArticleController {
         return articles.findAll().stream()
                 .map(a -> modelMapper.map(a, ArticleDto.class))
                 .collect(toList());
+
+    }
+
+    @GetMapping(ARTICLES_API_PREFIX + "/random/{size}")
+    public List<ArticleDto> getRandomNArticles(@PathVariable int size) {
+        log.info("Number of articles to be retrieved {}", articles.count());
+        return articles.findRandomArticles(size).stream()
+                .map(a -> modelMapper.map(a, ArticleDto.class))
+                .collect(toList());
     }
 }

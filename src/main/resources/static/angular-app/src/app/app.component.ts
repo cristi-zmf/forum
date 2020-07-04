@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Article} from './article/article.model';
-import {HttpClient} from "@angular/common/http";
+import {ArticleService} from "./article/article.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   articles: Article[];
 
-  constructor(httpClient: HttpClient) {
+  constructor(private articleService: ArticleService) {
     this.articles = [
       new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
       new Article('Angular for Beginners Guide',
@@ -18,7 +18,15 @@ export class AppComponent {
         'yarn-the-angular-cli-setup-an-ide/', 2),
       new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
-    httpClient.get("/articles").subscribe((data: Array<any>) =>
+
+  }
+
+  ngOnInit() {
+    this.retrieveNewArticles();
+  }
+
+  private retrieveNewArticles() {
+    this.articleService.getRandomArticles(3).subscribe((data: Array<any>) =>
       data.forEach(e => this.articles.push(Article.fromArticleDto(e)))
     );
   }
@@ -33,5 +41,10 @@ export class AppComponent {
 
   sortedArticles(): Article[] {
     return this.articles.sort((a: Article, b: Article) => b.votes - a.votes);
+  }
+
+  onScroll() {
+    console.log("Scrolled")
+    this.retrieveNewArticles();
   }
 }
