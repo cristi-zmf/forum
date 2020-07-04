@@ -36,6 +36,7 @@ public class ArticleDataGeneratorRunner implements CommandLineRunner {
                 .mapToObj(n -> new Article(faker.funnyName().name(), "http://" + faker.internet().url(), 0))
                 .limit(maxNoOrArticlesToGenerate)
                 .collect(toList());
+        log.info("Saving {} fake articles", maxNoOrArticlesToGenerate);
         articles.saveAll(generatedArticles);
     }
 }

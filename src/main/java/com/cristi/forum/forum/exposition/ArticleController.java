@@ -33,6 +33,7 @@ public class ArticleController {
 
     @GetMapping(ARTICLES_API_PREFIX)
     public List<ArticleDto> listArticles() {
+        log.info("Number of articles to be retrieved {}", articles.count());
         return articles.findAll().stream()
                 .map(a -> modelMapper.map(a, ArticleDto.class))
                 .collect(toList());
