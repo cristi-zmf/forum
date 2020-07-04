@@ -86,7 +86,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<excludes>
-					<exclude>static.angular-app/node_modules/**</exclude>
+					<exclude>static/angular-app/**</exclude>
 				</excludes>
 			</resource>
 
@@ -96,6 +96,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>ng</executable>
+					<workingDirectory>src/main/resources/static/angular-app</workingDirectory>
+					<arguments>
+						<argument>build</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
 
 		</plugins>
 	</build>
