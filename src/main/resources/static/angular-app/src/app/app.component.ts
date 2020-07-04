@@ -24,12 +24,24 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.retrieveNewArticles();
+    this.retrieveArticles();
   }
 
-  private retrieveNewArticles() {
+  private retrieveArticles() {
     this.spinner.show();
+    this.retrieveBatchOfArticles();
+  }
+
+  private retrieveBatchOfArticles() {
     this.articleService.getRandomArticles(10).subscribe((data: Array<any>) => {
+        data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
+        this.spinner.hide();
+      }
+    );
+  }
+
+  private retrieveAllArticles() {
+    this.articleService.getArticles().subscribe((data: Array<any>) => {
         data.forEach(e => this.articles.push(Article.fromArticleDto(e)));
         this.spinner.hide();
       }
@@ -50,6 +62,6 @@ export class AppComponent implements OnInit{
 
   onScroll() {
     console.log("Scrolled")
-    this.retrieveNewArticles();
+    this.retrieveArticles();
   }
 }
