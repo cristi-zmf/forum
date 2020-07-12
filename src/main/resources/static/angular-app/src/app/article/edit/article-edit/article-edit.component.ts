@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Article} from "../../article.model";
+import {ArticleService} from "../../article.service";
 
 @Component({
   selector: 'app-article-edit',
@@ -10,7 +11,7 @@ import {Article} from "../../article.model";
 export class ArticleEditComponent implements OnInit {
   article: Article;
   constructor(public dialogRef: MatDialogRef<ArticleEditComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ArticleData) {
+              @Inject(MAT_DIALOG_DATA) public data: ArticleData, private articleService: ArticleService) {
 
   }
 
@@ -20,6 +21,7 @@ export class ArticleEditComponent implements OnInit {
 
   applyChanges() {
     this.data.article.makeMeHaveSameContentAs(this.article);
+    // this.articleService.modifyArticle(this.article);
     this.dialogRef.close();
   }
 }

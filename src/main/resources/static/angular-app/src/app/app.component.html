@@ -14,6 +14,11 @@
   </button>
 </form>
 
+<div class="ui fluid icon input">
+  <input type="text" placeholder="Search article names..." (keyup)="searchForKey($event)">
+  <i class="search icon"></i>
+</div>
+
 <!-- infinite scroll div -->
 <div
   class="search-results"

@@ -11,6 +11,9 @@ import {NgxSpinnerService} from "ngx-spinner";
 })
 export class AppComponent implements OnInit{
   articles: Article[];
+  backupOfOriginalArticles: Article[];
+  private searchKeyword: String = '';
+  private isSearching: boolean = false;
 
   constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
     this.articles = [
@@ -63,7 +66,9 @@ export class AppComponent implements OnInit{
 
   addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
     console.log(`Adding article title: ${title.value} and link: ${link.value}`);
-    this.articles.push(new Article(title.value, link.value, 0));
+    let newArticle = new Article(title.value, link.value, 0);
+    this.articles.push(newArticle);
+    // this.articleService.saveArticle(newArticle);
     title.value = '';
     link.value = '';
     return false;
@@ -80,5 +85,30 @@ export class AppComponent implements OnInit{
   onScroll() {
     console.log("Scrolled")
     this.retrieveArticles();
+  }
+
+  searchForKey($event: KeyboardEvent) {
+    let searchWord = (event.target as HTMLInputElement).value;
+
+
+    if (this.isSearching === false) {
+      this.backupOfOriginalArticles = [...this.articles]
+      this.isSearching = true;
+    }
+
+    this.articles = this.searchForArticles(searchWord); //call backend function here
+
+    console.log("Value %s", searchWord);
+    console.log("Made backup of articles %o", this.backupOfOriginalArticles);
+    if (searchWord === '' || !searchWord) {
+      console.log("Exiting search mode");
+      this.articles = [...this.backupOfOriginalArticles];
+      this.isSearching = false;
+      this.backupOfOriginalArticles = [];
+    }
+  }
+
+  private searchForArticles(searchWord: string): Article[] {
+    return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
   }
 }
