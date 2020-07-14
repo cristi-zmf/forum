@@ -1,6 +1,8 @@
 package com.cristi.forum.forum.domain.article;
 
+import com.cristi.forum.forum.exposition.ArticleSearchCriteriaDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +30,13 @@ public class ArticlesSpecializedImpl implements ArticlesSpecialized {
     public List<Article> findNextArticlesWithIdGreaterThan(long id, int limit) {
         return articles.findByIdGreaterThan(id, PageRequest.of(0, limit))
                 .getContent();
+    }
+
+    @Override
+    public List<Article> findByCriteria(ArticleSearchCriteriaDto searchCriteria, int limit) {
+        Page<Article> pageResults = articles.findByTitleContainingIgnoreCase(
+                searchCriteria.getArticleName(), PageRequest.of(0, limit)
+        );
+        return pageResults.getContent();
     }
 }

@@ -30,6 +30,15 @@ public class ArticleController {
         return articles.save(article).getId();
     }
 
+
+    @PostMapping(ARTICLES_API_PREFIX + "/search")
+    public List<ArticleDto> searchFirst10Articles(@RequestBody ArticleSearchCriteriaDto searchCriteria) {
+        log.info("Searching articles with criteria: {}", searchCriteria);
+        return articles.findByCriteria(searchCriteria, 10).stream()
+                .map(a -> modelMapper.map(a, ArticleDto.class))
+                .collect(toList());
+    }
+
     @GetMapping(ARTICLES_API_PREFIX)
     public List<ArticleDto> listArticles() {
         log.info("Number of articles to be retrieved {}", articles.count());

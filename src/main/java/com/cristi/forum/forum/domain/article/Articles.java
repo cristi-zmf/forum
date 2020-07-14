@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Articles extends JpaRepository<Article, Long>, ArticlesSpecialized {
     Page<Article> findByIdGreaterThan(long id, Pageable pageRequest);
+    Page<Article> findByTitleContainingIgnoreCase(String titlePattern, Pageable pageRequest);
 }

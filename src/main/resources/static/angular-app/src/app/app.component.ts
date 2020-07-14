@@ -3,6 +3,7 @@ import {Article} from './article/article.model';
 import {ArticleService} from "./article/article.service";
 import {NgxSpinner} from "ngx-spinner/lib/ngx-spinner.enum";
 import {NgxSpinnerService} from "ngx-spinner";
+import {ArticleSearchCriteria} from "./article/article-search-criteria";
 
 @Component({
   selector: 'app-root',
@@ -96,7 +97,8 @@ export class AppComponent implements OnInit{
       this.isSearching = true;
     }
 
-    this.articles = this.searchForArticles(searchWord); //call backend function here
+    // this.articles = this.searchForArticles(searchWord); //call backend function here
+    this.searchForArticles(searchWord); //call backend function here
 
     console.log("Value %s", searchWord);
     console.log("Made backup of articles %o", this.backupOfOriginalArticles);
@@ -108,7 +110,21 @@ export class AppComponent implements OnInit{
     }
   }
 
-  private searchForArticles(searchWord: string): Article[] {
-    return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
+  private searchForArticles(searchWord: string): void {
+    // return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
+    let searchCriteria: ArticleSearchCriteria = {
+      articleName: searchWord
+    };
+    this.articleService.searchArticle(searchCriteria).subscribe(
+      (data: Article[]) => this.articles = data.map(a => Article.fromArticleDto(a))
+    );
   }
+  // private searchForArticles(searchWord: string): Article[] {
+  //   // return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
+  //   let searchCriteria: ArticleSearchCriteria = {
+  //     articleName : searchWord
+  //   };
+  //   this.articleService.searchArticle(searchCriteria).subscribe((data: Article[]) => this.articles = [...data]);
+  //   return this.articles
+  // }
 }
