@@ -18,22 +18,21 @@ export class AppComponent implements OnInit{
 
   constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
     this.articles = [
-      // new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
-      // new Article('Angular for Beginners Guide',
-      //   'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
-      //   'yarn-the-angular-cli-setup-an-ide/', 2),
-      // new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
+      new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
+      new Article('Angular for Beginners Guide',
+        'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
+        'yarn-the-angular-cli-setup-an-ide/', 2),
+      new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
-
   }
 
   ngOnInit() {
-    this.retrieveArticles();
+    // this.retrieveArticles();
   }
 
   private retrieveArticles() {
     this.spinner.show();
-    this.retrieveNextBatchOfArticles();
+    this.retrieveRandomBatchOfArticles();
   }
 
   private retrieveRandomBatchOfArticles() {
