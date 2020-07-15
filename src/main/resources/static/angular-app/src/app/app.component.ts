@@ -18,21 +18,31 @@ export class AppComponent implements OnInit{
 
   constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
     this.articles = [
-      new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
-      new Article('Angular for Beginners Guide',
-        'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
-        'yarn-the-angular-cli-setup-an-ide/', 2),
-      new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
+      // new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
+      // new Article('Angular for Beginners Guide',
+      //   'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
+      //   'yarn-the-angular-cli-setup-an-ide/', 2),
+      // new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
     ];
   }
 
   ngOnInit() {
-    // this.retrieveArticles();
+    this.retrieveArticles();
   }
 
   private retrieveArticles() {
     this.spinner.show();
-    this.retrieveRandomBatchOfArticles();
+    this.retrieveNextBatchOfArticles();
+    // this.getAllArticles();
+  }
+
+  private getAllArticles() {
+    this.articleService.getArticles().subscribe(
+      articolele => articolele
+        .map(articol => Article.fromArticleDto(articol))
+        .forEach(articol => this.articles.push(articol))
+    )
+    this.spinner.hide();
   }
 
   private retrieveRandomBatchOfArticles() {
@@ -119,11 +129,6 @@ export class AppComponent implements OnInit{
     );
   }
   // private searchForArticles(searchWord: string): Article[] {
-  //   // return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
-  //   let searchCriteria: ArticleSearchCriteria = {
-  //     articleName : searchWord
-  //   };
-  //   this.articleService.searchArticle(searchCriteria).subscribe((data: Article[]) => this.articles = [...data]);
-  //   return this.articles
+  //   return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
   // }
 }
