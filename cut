@@ -1,0 +1,2 @@
+CONTAINER ID        IMAGE                 COMMAND                CREATED             STATUS                            PORTS               NAMES
+7f3d56fad0cd        cristizmf/forum:1.0   "java -jar /app.jar"   2 minutes ago       Exited (143) About a minute ago                       happy_chaplygin

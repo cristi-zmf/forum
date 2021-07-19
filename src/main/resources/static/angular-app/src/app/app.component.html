@@ -20,13 +20,13 @@
 </div>
 
 <!-- infinite scroll div -->
-<div>
-<!--  class="search-results"-->
-<!--  infiniteScroll-->
-<!--  [infiniteScrollDistance]="2"-->
-<!--  [infiniteScrollThrottle]="50"-->
-<!--  (scrolled)="onScroll()"-->
-<!--&gt;-->
+<div
+  class="search-results"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+  >
   <div class="ui grid posts">
     <app-article *ngFor="let article of sortedArticles()" [article]="article"></app-article>
 

@@ -11,28 +11,21 @@ import {ArticleSearchCriteria} from "./article/article-search-criteria";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  articles: Article[];
+  articles: Article[] = [];
   backupOfOriginalArticles: Article[];
   private searchKeyword: String = '';
   private isSearching: boolean = false;
 
   constructor(private articleService: ArticleService, private spinner: NgxSpinnerService) {
-    this.articles = [
-      new Article('Angular Tour of Heroes', 'https://github.com/johnpapa/angular-tour-of-heroes', 3),
-      new Article('Angular for Beginners Guide',
-        'https://blog.angular-university.io/getting-started-with-angular-setup-a-development-environment-with-' +
-        'yarn-the-angular-cli-setup-an-ide/', 2),
-      new Article('Getting Started with Angular', 'https://www.ag-grid.com/angular-getting-started/', 1)
-    ];
   }
 
   ngOnInit() {
-    // this.retrieveArticles();
+    this.retrieveArticles();
   }
 
   private retrieveArticles() {
     this.spinner.show();
-    this.retrieveRandomBatchOfArticles();
+    this.retrieveNextBatchOfArticles()
   }
 
   private retrieveRandomBatchOfArticles() {
@@ -68,7 +61,7 @@ export class AppComponent implements OnInit{
     console.log(`Adding article title: ${title.value} and link: ${link.value}`);
     let newArticle = new Article(title.value, link.value, 0);
     this.articles.push(newArticle);
-    // this.articleService.saveArticle(newArticle);
+    this.articleService.saveArticle(newArticle);
     title.value = '';
     link.value = '';
     return false;
