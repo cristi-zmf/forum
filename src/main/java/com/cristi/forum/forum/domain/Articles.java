@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface Articles extends JpaRepository<Article, Long> {
     List<Article> findByIdGreaterThanOrderById(Long id, Pageable pageRequest);
+    List<Article> findByTitleContainingIgnoreCase(String titleKeyword);
 }

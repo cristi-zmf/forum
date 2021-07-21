@@ -37,12 +37,14 @@ export class AppComponent implements OnInit{
   }
 
   private retrieveNextBatchOfArticles() {
-    let lastRetrievedId = 0;
+    let biggestRetrievedId = 0;
     if (this.articles.length > 0) {
-      let lastArticle: Article = this.articles[this.articles.length - 1];
-      lastRetrievedId = lastArticle.id;
+      //articles.stream.map
+      Math.max(1, 2,3)
+      //[1, 2,3] -> 1, 2, 3
+      biggestRetrievedId = Math.max(... this.articles.map(articol => articol.id));
     }
-    this.articleService.getNextArticles(lastRetrievedId, 10).subscribe((data: Array<any>) => {
+    this.articleService.getNextArticles(biggestRetrievedId, 5).subscribe((data: Array<any>) => {
         this.pushNewArticlesToUIListOfArticles(data);
         this.spinner.hide();
       }
@@ -60,8 +62,11 @@ export class AppComponent implements OnInit{
   addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
     console.log(`Adding article title: ${title.value} and link: ${link.value}`);
     let newArticle = new Article(title.value, link.value, 0);
-    this.articles.push(newArticle);
-    this.articleService.saveArticle(newArticle);
+
+    this.articleService.saveArticle(newArticle).subscribe(newId => {
+      newArticle.id = newId;
+    });
+
     title.value = '';
     link.value = '';
     return false;
@@ -103,20 +108,10 @@ export class AppComponent implements OnInit{
   }
 
   private searchForArticles(searchWord: string): void {
-    // return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
-    let searchCriteria: ArticleSearchCriteria = {
-      articleName: searchWord
-    };
-    this.articleService.searchArticle(searchCriteria).subscribe(
+    //  articles.stream.filter(
+    this.articles = this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
+    this.articleService.searchArticle(searchWord).subscribe(
       (data: Article[]) => this.articles = data.map(a => Article.fromArticleDto(a))
     );
   }
-  // private searchForArticles(searchWord: string): Article[] {
-  //   // return this.articles.filter(a => a.title.toLowerCase().includes(searchWord.toLowerCase()));
-  //   let searchCriteria: ArticleSearchCriteria = {
-  //     articleName : searchWord
-  //   };
-  //   this.articleService.searchArticle(searchCriteria).subscribe((data: Article[]) => this.articles = [...data]);
-  //   return this.articles
-  // }
 }

@@ -21,7 +21,7 @@ export class ArticleEditComponent implements OnInit {
 
   applyChanges() {
     this.data.article.makeMeHaveSameContentAs(this.article);
-    // this.articleService.modifyArticle(this.article);
+    this.articleService.saveArticle(this.article).subscribe();
     this.dialogRef.close();
   }
 }

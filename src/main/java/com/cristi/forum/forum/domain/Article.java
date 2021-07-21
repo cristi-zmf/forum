@@ -17,4 +17,11 @@ public class Article extends BaseEntity {
     private String title;
     private String link;
     private int votes;
+
+    public Article(Long id, String title, String link, int votes) {
+        super(id);
+        this.title = title;
+        this.link = link;
+        this.votes = votes;
+    }
 }

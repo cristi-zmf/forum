@@ -3,6 +3,7 @@ import {Article} from './article.model';
 import {MatDialog} from "@angular/material/dialog";
 import {ArticleEditComponent} from "./edit/article-edit/article-edit.component";
 import {RouterLink} from "@angular/router";
+import {ArticleService} from "./article.service";
 
 @Component({
   selector: 'app-article',
@@ -12,8 +13,7 @@ import {RouterLink} from "@angular/router";
 export class ArticleComponent implements OnInit {
   @HostBinding('attr.class') cssClass = 'row';
   @Input() article: Article;
-
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private articleService: ArticleService) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ArticleEditComponent, {
@@ -31,11 +31,13 @@ export class ArticleComponent implements OnInit {
 
   votesUp() {
     this.article.voteUp();
+    this.articleService.saveArticle(this.article).subscribe()
     return false;
   }
 
   votesDown() {
     this.article.voteDown();
+    this.articleService.saveArticle(this.article).subscribe()
     return false;
   }
 

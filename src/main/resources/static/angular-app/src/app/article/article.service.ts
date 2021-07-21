@@ -21,14 +21,14 @@ export class ArticleService {
     return this.http.get<Array<any>>(`/articles/${id}/${limit}`);
   }
   public saveArticle(newArticle: Article): Observable<number>  {
-    return this.http.put<number>(`/articles`, newArticle);
+    return this.http.post<number>(`/articles`, newArticle);
   }
 
   public modifyArticle(modifiedArticle: Article): Observable<number>  {
     return this.http.post<number>(`/articles`, modifiedArticle);
   }
-  public searchArticle(searchCriteria: ArticleSearchCriteria): Observable<Array<Article>>  {
-    return this.http.post<Array<Article>>(`/articles/search`, searchCriteria);
+  public searchArticle(searchCriteria: string): Observable<Array<Article>>  {
+    return this.http.get<Array<Article>>(`/articles/search/${searchCriteria}`);
   }
 
 

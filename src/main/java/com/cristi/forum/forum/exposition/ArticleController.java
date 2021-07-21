@@ -19,6 +19,8 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @ApiRestController
 @Transactional
 @Slf4j
@@ -33,7 +35,7 @@ public class ArticleController {
     public List<ArticleDto> findAllArticles() {
         return articles.findAll().stream() // ????? cate or sa fie peste 1 luna, 1 an, 10 ani
                 .map(mapToDto())
-                .collect(Collectors.toList());
+                .collect(toList());
     }
     @GetMapping(path = ARTICLES_API_PREFIX + "/random/{nRandomArticles}") // GET api/articles
     public List<ArticleDto> findNRandomArticles(@PathVariable int nRandomArticles) {
@@ -43,7 +45,7 @@ public class ArticleController {
                 .findAll(PageRequest.of(randomPage, nRandomArticles, Sort.unsorted()))
                 .getContent().stream()
                 .map(mapToDto())
-                .collect(Collectors.toList());
+                .collect(toList());
     }
     @GetMapping(path = ARTICLES_API_PREFIX + "/{id}/{pageSize}") // GET api/articles
     public List<ArticleDto> findNextArticles(@PathVariable long id, @PathVariable int pageSize) {
@@ -52,12 +54,20 @@ public class ArticleController {
                 .findByIdGreaterThanOrderById(id, PageRequest.of(0, pageSize))
                 .stream()
                 .map(mapToDto())
-                .collect(Collectors.toList());
+                .collect(toList());
     }
+
     @PostMapping(path = ARTICLES_API_PREFIX) // POST api/articles
     public Long addArticle(@RequestBody ArticleDto dto) {
-        Article newArticle = new Article(dto.title, dto.link, dto.votes);
+        Article newArticle = new Article(dto.getId(), dto.title, dto.link, dto.votes);
         return articles.save(newArticle).getId();
+    }
+    @GetMapping(path = ARTICLES_API_PREFIX + "/search/{titleKeyword}") // POST api/articles/search/param-de-cautat
+    public List<ArticleDto> searchForArticles(@PathVariable String titleKeyword) {
+
+        return articles.findByTitleContainingIgnoreCase(titleKeyword).stream()
+                .map(mapToDto())
+                .collect(toList());
     }
 
     private Function<Article, ArticleDto> mapToDto() {
