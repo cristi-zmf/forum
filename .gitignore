@@ -72,3 +72,9 @@ testem.log
 .DS_Store
 Thumbs.db
 src/main/resources/public
+/src/main/resources/static/angular-app/node/node_modules/npm/
+/src/main/resources/static/angular-app/node/node
+/src/main/resources/static/angular-app/node/npm
+/src/main/resources/static/angular-app/node/npm.cmd
+/src/main/resources/static/angular-app/node/npx
+/src/main/resources/static/angular-app/node/npx.cmd
